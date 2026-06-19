@@ -1,0 +1,32 @@
+{
+  "short_name": "米乐的百宝箱",
+  "name": "米乐的百宝箱 · 开箱即用的在线工具集",
+  "description": "聚合编码转换、PDF/图片/文档处理、配色设计、加密哈希、地理查询等常用在线工具，开箱即用、隐私友好。",
+  "lang": "zh-CN",
+  "categories": ["utilities", "productivity", "developer"],
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "appIcon.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "appIcon.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#FF8C42",
+  "background_color": "#fffaf5"
+}

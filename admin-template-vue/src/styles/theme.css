@@ -1,0 +1,101 @@
+/* ============================================================
+   通用后台模板主题 — 暖橙 Flat Design
+   品牌主色 #FF8C42（hover #F2741C），背景 #FFFAF5
+   换主题色：只改 --brand-primary 系列 + 下方 --el-color-primary 系列即可全站生效。
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  /* —— 品牌主色（改这里换主题色）—— */
+  --brand-primary: #ff8c42;
+  --brand-primary-600: #f2741c;
+  --brand-primary-700: #d65f10;
+  --brand-primary-400: #ffa869;
+  --brand-primary-soft: #ffe9d8;
+
+  /* —— 背景/表面 —— */
+  --brand-bg: #fffaf5;
+  --brand-surface: #ffffff;
+  --brand-surface-alt: #fff5ec;
+
+  /* —— 文本层级 —— */
+  --brand-text: #2a211a;
+  --brand-text-soft: #6b5d52;
+  --brand-text-muted: #a1907f;
+
+  /* —— 边框 —— */
+  --brand-border: #f2e6da;
+  --brand-border-strong: #e7d4c2;
+
+  --font-sans:
+    'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+
+  /* —— 覆盖 Element Plus 主题变量 —— */
+  --el-color-primary: #ff8c42;
+  --el-color-primary-light-3: #ffaf7b;
+  --el-color-primary-light-5: #ffc6a1;
+  --el-color-primary-light-7: #ffddc6;
+  --el-color-primary-light-8: #ffe8d9;
+  --el-color-primary-light-9: #fff4ec;
+  --el-color-primary-dark-2: #f2741c;
+
+  --el-border-radius-base: 8px;
+  --el-border-radius-small: 6px;
+
+  --el-text-color-primary: #2a211a;
+  --el-text-color-regular: #6b5d52;
+  --el-font-family: var(--font-sans);
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--brand-bg);
+  color: var(--brand-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 数值/标题用等宽字体增强数据感 */
+.brand-mono {
+  font-family: var(--font-mono);
+}
+
+/* 卡片统一 flat 风格：细边框、克制阴影 */
+.el-card {
+  border: 1px solid var(--brand-border);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px -12px rgba(42, 33, 26, 0.18) !important;
+}
+
+.el-button--primary {
+  --el-button-hover-bg-color: var(--brand-primary-600);
+  --el-button-hover-border-color: var(--brand-primary-600);
+}
+
+/* 表头淡橙底，呼应品牌 */
+.el-table th.el-table__cell {
+  background-color: var(--brand-surface-alt) !important;
+  color: var(--brand-text) !important;
+  font-weight: 600;
+}
+
+/* 纤细圆润滚动条、主题色半透明 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(242, 116, 28, 0.28);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(242, 116, 28, 0.45);
+}

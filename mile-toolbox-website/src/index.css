@@ -1,0 +1,231 @@
+/* ============================================================
+   Mile 工具箱 — 全局样式 & 设计令牌（UI 设计约束 / Source of Truth）
+   设计系统：Flat Design（来自 ui-ux-pro-max）
+   - 品牌主题色 Orange #FF8C42（hover #F2741C）
+   - 字体：JetBrains Mono（标题/数据）+ IBM Plex Sans（正文）
+   - 无重阴影、清爽过渡（150-200ms ease）、icon-heavy
+   迭代中若调整视觉令牌，统一改这里，全站生效。
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  /* —— 颜色令牌（品牌主题色 #FF8C42 暖橙） —— */
+  --color-primary: #ff8c42;
+  --color-primary-600: #f2741c;
+  --color-primary-700: #d65f10;
+  --color-primary-400: #ffa869;
+  --color-primary-soft: #ffe9d8;
+  --color-cta: #ff8c42;
+  --color-cta-600: #f2741c;
+
+  --color-bg: #fffaf5;
+  --color-surface: #ffffff;
+  --color-surface-alt: #fff5ec;
+
+  --color-text: #2a211a;
+  --color-text-soft: #6b5d52;
+  --color-text-muted: #a1907f;
+
+  --color-border: #f2e6da;
+  --color-border-strong: #e7d4c2;
+
+  /* 分类强调色（与品牌橙错开、低饱和、可访问性友好） */
+  --cat-query: #2e90fa;
+  --cat-convert: #8b5cf6;
+  --cat-file: #ef4444;
+  --cat-color: #ec4899;
+  --cat-crypto: #14b8a6;
+  --cat-dev: #6366f1;
+  --cat-text: #64748b;
+
+  /* 品牌色阴影（暖橙、低透明，flat 风格下的克制点缀） */
+  --shadow-brand: 0 8px 24px -8px rgba(242, 116, 28, 0.22);
+  --shadow-card: 0 6px 18px -10px rgba(42, 33, 26, 0.18);
+
+  /* 页脚底色（深色；深色主题里另取值） */
+  --color-footer-bg: #2a211a;
+
+  /* —— 字体令牌 —— */
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+
+  /* —— 间距 / 圆角 / 容器 —— */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+  --container: 1200px;
+  --nav-h: 68px;
+
+  /* —— 过渡 —— */
+  --t-fast: 150ms ease;
+  --t-base: 200ms ease;
+}
+
+/* —— 深色主题（覆盖颜色令牌，其余结构不变） —— */
+:root[data-theme='dark'] {
+  --color-primary: #ff9a5a;
+  --color-primary-600: #ff8c42;
+  --color-primary-700: #ffb380;
+  --color-primary-400: #c95f17;
+  --color-primary-soft: #3a2a1d;
+  --color-cta: #ff8c42;
+  --color-cta-600: #ffa869;
+
+  --color-bg: #14110e;
+  --color-surface: #1d1813;
+  --color-surface-alt: #241d16;
+
+  --color-text: #f5ede4;
+  --color-text-soft: #c2b3a4;
+  --color-text-muted: #8d7d6e;
+
+  --color-border: #332a22;
+  --color-border-strong: #46392e;
+
+  --color-footer-bg: #0e0c0a;
+
+  --shadow-brand: 0 8px 24px -8px rgba(255, 140, 66, 0.28);
+  --shadow-card: 0 8px 22px -12px rgba(0, 0, 0, 0.6);
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+code,
+kbd {
+  font-family: var(--font-mono);
+}
+
+img,
+svg {
+  display: block;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 可见的键盘焦点态（无障碍） */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 布局工具类 */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* —— 入场动画（仅 transform/opacity） —— */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  animation: fade-up 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 滚动进入视口时触发 */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 620ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal-on-scroll.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* 尊重用户的减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+  }
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

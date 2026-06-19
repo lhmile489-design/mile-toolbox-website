@@ -1,0 +1,56 @@
+# ============================================================
+# GitHub 上传仓库 .gitignore — 仅上传四端源码 + 根 README
+# 排除：技能包 / 约束文件 / 文档 / 密钥 / 构建产物 / IDE
+# ============================================================
+
+# ---- git 备份目录（临时重命名的各仓库 .git，绝不上传）----
+.git_bak/
+**/.git_bak/
+
+# ---- 技能包与 IDE 配置 ----
+.kiro/
+**/.kiro/
+.vscode/
+**/.vscode/
+.idea/
+**/.idea/
+
+# ---- 约束 / 协作文件 ----
+CLAUDE.md
+**/CLAUDE.md
+commit-msg.txt
+**/commit-msg.txt
+
+# ---- 文档（部署教程 / 对接文档 / PRD / 需求 / 踩坑 / 数据库设计 等一律不传）----
+docs/
+**/docs/
+导入数据库.sql
+
+# ---- 密钥 / 本地配置（安全红线，绝不上传）----
+**/application-local.yml
+**/application-local.yaml
+**/*.local.yml
+*.env.local
+**/.env.local
+**/.env.*.local
+**/info.md
+
+# ---- 构建产物 ----
+**/node_modules/
+**/target/
+**/dist/
+**/build/
+**/.mvn/wrapper/maven-wrapper.jar
+
+# ---- 日志 / 临时 / 系统 ----
+*.log
+**/*.log
+.DS_Store
+Thumbs.db
+**/tmp/
+**/.tmp/
+
+# ---- 上传辅助脚本 ----
+_rename_git.ps1
+_restore_git.ps1
+_*.ps1

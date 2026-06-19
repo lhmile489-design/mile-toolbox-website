@@ -1,0 +1,83 @@
+server:
+  port: 8989
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: mile-toolBox-EndProject
+  profiles:
+    active: dev
+  # 文件上传上限（重型文件工具：PDF/图片/文档转换）
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 200MB
+  # Flyway 数据库迁移（启动自动按版本执行）
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    encoding: UTF-8
+  # 数据源与 Redis 的具体连接信息放在 application-local.yml（gitignore，不进仓库）
+  # 此处仅给本地默认占位，便于零配置启动联调；生产用环境变量覆盖
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:mile_toolbox}?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:root}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      database: ${REDIS_DB:0}
+      password: ${REDIS_PASSWORD:}
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 0
+
+# MyBatis-Plus 配置
+mybatis-plus:
+  configuration:
+    # 列名全驼峰：表列与实体字段一致（createTime/categoryId/useCount），关闭蛇形转换
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      # 表名/列名不转下划线：实体驼峰字段直接对应驼峰列（createTime/toolKey/useCount）
+      table-underline: false
+      # 逻辑删除（如后续启用，统一约定字段）；当前表未用逻辑删除，留默认
+  mapper-locations: classpath*:mapper/**/*.xml
+
+# Sa-Token 配置（双域：前台用户 USER + 后台管理 ADMIN）
+sa-token:
+  token-name: Authorization
+  timeout: 2592000          # 30 天
+  active-timeout: -1
+  is-concurrent: true
+  is-share: false
+  token-style: uuid
+  is-log: false
+
+# 业务配置
+toolbox:
+  # 临时文件目录（文件处理产物，定时清理）
+  temp-dir: ${TOOLBOX_TEMP_DIR:./tmp}
+  # 临时文件 TTL（秒）
+  temp-ttl-seconds: 3600
+  # 用户使用历史保留上限（条/人）
+  usage-record-limit: 200
+  # 维智地图（geocode 工具）：base-url 公开，app-key 走 application-local.yml
+  wayz:
+    base-url: https://api.newayz.com
+  # 接口盒子（phone-location）：base-url 公开，id/key 走 application-local.yml
+  apihz:
+    base-url: https://cn.apihz.cn
+
+logging:
+  level:
+    root: info
+    com.example.miletoolboxendproject: debug
