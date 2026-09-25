@@ -27,6 +27,9 @@ public class ToolboxProperties {
     /** LibreOffice 配置（PDF 引擎，替代 wkhtmltopdf） */
     private LibreOffice libreoffice = new LibreOffice();
 
+    /** FFmpeg 媒体处理配置（五期媒体工具包） */
+    private Ffmpeg ffmpeg = new Ffmpeg();
+
     /**
      * Pandoc 文档转换配置。
      */
@@ -107,5 +110,23 @@ public class ToolboxProperties {
         private String secretKey;
         /** 对象存储路径前缀（产物归类） */
         private String prefix = "toolbox/";
+    }
+
+    /**
+     * FFmpeg 媒体处理配置（视频压缩/格式转换/音频提取/音频转换）。
+     * OpenCloudOS/CentOS 安装：
+     *   dnf install epel-release -y
+     *   dnf install ffmpeg -y
+     *   which ffmpeg → /usr/bin/ffmpeg
+     * 安装后将 enabled 改为 true。
+     */
+    @Data
+    public static class Ffmpeg {
+        /** 是否启用（服务器已安装 FFmpeg 时设 true） */
+        private boolean enabled = false;
+        /** ffmpeg 可执行文件路径 */
+        private String path = "/usr/bin/ffmpeg";
+        /** 单次转换超时（秒，视频转换耗时较长） */
+        private int timeoutSeconds = 300;
     }
 }

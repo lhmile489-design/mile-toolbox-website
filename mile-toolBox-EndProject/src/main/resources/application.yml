@@ -10,11 +10,11 @@ spring:
   #   本地开发：IDEA Run Configurations → Active profiles: dev
   #   服务器生产：java -jar xxx.jar --spring.profiles.active=prod \
   #               --spring.config.additional-location=file:/部署目录/
-  # 文件上传上限（重型文件工具：PDF/图片/文档转换）
+  # 文件上传上限（视频等大文件工具）
   servlet:
     multipart:
-      max-file-size: 50MB
-      max-request-size: 200MB
+      max-file-size: 500MB
+      max-request-size: 500MB
   # Flyway 数据库迁移（启动自动按版本执行）
   flyway:
     enabled: true
@@ -93,6 +93,13 @@ toolbox:
     enabled: false
     path: ${LIBREOFFICE_PATH:/usr/bin/soffice}
     timeout-seconds: 120
+  # FFmpeg 媒体处理（五期：视频压缩/转换/音频提取/转换）
+  # OpenCloudOS/CentOS：dnf install epel-release -y && dnf install ffmpeg -y
+  # 安装后服务器 application.yml 里改 enabled: true
+  ffmpeg:
+    enabled: false
+    path: ${FFMPEG_PATH:/usr/bin/ffmpeg}
+    timeout-seconds: 300
 
 logging:
   level:
