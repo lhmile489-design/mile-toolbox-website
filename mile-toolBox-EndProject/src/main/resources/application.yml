@@ -6,8 +6,10 @@ server:
 spring:
   application:
     name: mile-toolBox-EndProject
-  profiles:
-    active: dev
+  # profiles.active 不在此硬编码，由启动参数决定：
+  #   本地开发：IDEA Run Configurations → Active profiles: dev
+  #   服务器生产：java -jar xxx.jar --spring.profiles.active=prod \
+  #               --spring.config.additional-location=file:/部署目录/
   # 文件上传上限（重型文件工具：PDF/图片/文档转换）
   servlet:
     multipart:
@@ -76,6 +78,21 @@ toolbox:
   # 接口盒子（phone-location）：base-url 公开，id/key 走 application-local.yml
   apihz:
     base-url: https://cn.apihz.cn
+  # Pandoc 文档转换
+  # 默认值 /usr/bin/pandoc 适用于 Linux 服务器（which pandoc 的路径）
+  # Windows 本地开发在 application-local.yml 覆盖为 C:/Program Files/Pandoc/pandoc.exe
+  pandoc:
+    enabled: true
+    path: ${PANDOC_PATH:/usr/bin/pandoc}
+    timeout-seconds: 60
+  # LibreOffice（PDF 引擎，替代 wkhtmltopdf）
+  # OpenCloudOS / CentOS 系安装：dnf install libreoffice -y
+  # 安装后确认路径：which soffice → 通常为 /usr/bin/soffice
+  # 安装后将服务器侧 application.yml 里 enabled 改为 true
+  libreoffice:
+    enabled: false
+    path: ${LIBREOFFICE_PATH:/usr/bin/soffice}
+    timeout-seconds: 120
 
 logging:
   level:

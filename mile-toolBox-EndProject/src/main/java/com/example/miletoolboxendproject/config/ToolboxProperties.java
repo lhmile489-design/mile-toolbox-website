@@ -24,6 +24,9 @@ public class ToolboxProperties {
     /** 文档转换（Pandoc）配置 */
     private Pandoc pandoc = new Pandoc();
 
+    /** LibreOffice 配置（PDF 引擎，替代 wkhtmltopdf） */
+    private LibreOffice libreoffice = new LibreOffice();
+
     /**
      * Pandoc 文档转换配置。
      */
@@ -35,6 +38,23 @@ public class ToolboxProperties {
         private String path = "pandoc";
         /** 单次转换超时（秒） */
         private int timeoutSeconds = 60;
+    }
+
+    /**
+     * LibreOffice PDF 引擎配置（替代 wkhtmltopdf）。
+     * 用于 doc-to-pdf / md-convert(pdf) / doc-to-image。
+     * OpenCloudOS/CentOS：dnf install libreoffice -y
+     * 安装后 which soffice 确认路径，再将 enabled 改为 true。
+     * 未安装时将上述接口以 SYSTEM_ERROR(10010) 降级返回，不影响其他接口。
+     */
+    @Data
+    public static class LibreOffice {
+        /** 是否启用（服务器已安装 LibreOffice 时设 true） */
+        private boolean enabled = false;
+        /** soffice 可执行文件路径（默认 /usr/bin/soffice） */
+        private String path = "/usr/bin/soffice";
+        /** 单次转换超时（秒，LibreOffice 启动较慢，建议 120） */
+        private int timeoutSeconds = 120;
     }
 
     /** 维智地图配置 */

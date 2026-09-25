@@ -1,5 +1,17 @@
 # 本地真实配置示例 —— 复制为 application-local.yml 后填入真实值
 # application-local.yml 已被 .gitignore 忽略，不会进仓库（密钥隔离）
+# =====================================================================
+# 区分环境：
+#   本地开发 → 复制本文件为 application-local.yml，填入本机真实值
+#             IDEA Run Configurations → Active profiles: dev
+#   生产服务器 → 直接打包部署即可（Pandoc/Linux 路径已内嵌在 application.yml 默认值）
+#             服务器上只需一个包含密钥的 application-local.yml（或 application-prod.yml）
+#             启动命令示例：
+#               java -jar mile-toolbox.jar \
+#                 --spring.config.additional-location=file:/www/wwwroot/xxx/
+#             ↑ 不再强制要求 --spring.profiles.active=prod，默认值已覆盖 Pandoc 路径
+# =====================================================================
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/mile_toolbox?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
@@ -15,11 +27,13 @@ spring:
 toolbox:
   wayz:
     app-key: your_wayz_app_key
+
   # 接口盒子 apihz.cn（手机号归属地 phone-location）：
   # 默认公共测试号 88888888 有频次限制；生产请到 apihz.cn 注册专属 id/key
   apihz:
     id: "88888888"
     key: "88888888"
+
   # 腾讯云 COS 对象存储（文件处理产物保留/分享）。密钥仅存本地，不进仓库。
   cos:
     enabled: false
@@ -28,8 +42,31 @@ toolbox:
     secret-id: your_secret_id
     secret-key: your_secret_key
     prefix: toolbox/
-  # 文档转换 Pandoc（doc-convert）。服务器需安装 pandoc，见 docs/部署-宝塔外部依赖安装.md
+
+  # 文档转换 Pandoc（doc-convert / word-to-md / md-convert 等）
+  # ⚠️ 仅 Windows 本地开发需要覆盖此配置！
+  # Linux 服务器默认值已在 application.yml 设为 /usr/bin/pandoc，无需服务器操作。
+  # Windows 本地开发取消注释并填入实际路径（where pandoc 确认）：
   pandoc:
-    enabled: false
-    path: pandoc
+    enabled: true
+    # path: "C:\\Users\\xxx\\AppData\\Local\\Pandoc\\pandoc.exe"
+    # path: "C:\\Program Files\\Pandoc\\pandoc.exe"
+    path: pandoc          # 如果 pandoc 在 PATH 中可用时直接写 pandoc
     timeout-seconds: 60
+
+  # LibreOffice（PDF 引擎，替代 wkhtmltopdf）
+  # 用于 doc-to-pdf / md-convert(pdf) / doc-to-image
+  # OpenCloudOS/CentOS 服务器安装：
+  #   dnf install libreoffice -y
+  #   which soffice          → 确认路径（通常 /usr/bin/soffice）
+  #   soffice --version      → 验证安装成功
+  # 安装后将服务器 application.yml 里 libreoffice.enabled 改为 true
+  # 未安装时保持 enabled: false，相关接口返回 10010（不影响其他工具）
+  libreoffice:
+    enabled: false
+    # Linux 服务器：
+    # path: /usr/bin/soffice
+    # Windows 本地开发（如已安装 LibreOffice）：
+    # path: "C:\\Program Files\\LibreOffice\\program\\soffice.exe"
+    path: /usr/bin/soffice
+    timeout-seconds: 120
